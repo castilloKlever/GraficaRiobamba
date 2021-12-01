@@ -73,3 +73,15 @@ ServiceGaleria insertar,1
 ServiceMensaje listar,1
 ServiceMensaje eliminar,0
 ServiceMensaje insertar,0
+ServiceProducto listar,4
+ServiceProducto eliminar,0
+ServiceProducto insertar,0
+ServiceGaleria listar,1
+ServiceGaleria eliminar,0
+ServiceGaleria insertar,1
+ServiceMensaje listar,2
+ServiceMensaje eliminar,0
+ServiceMensaje insertar,1
+ServiceBlog listar,1
+ServiceBlog eliminar,0
+ServiceBlog insertar,1
