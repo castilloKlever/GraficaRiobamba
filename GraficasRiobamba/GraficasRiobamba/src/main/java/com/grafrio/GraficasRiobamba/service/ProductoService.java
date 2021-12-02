@@ -11,8 +11,14 @@ import com.grafrio.GraficasRiobamba.interfaces.IproductoService;
 import com.grafrio.GraficasRiobamba.repository.ProductoRepo;
 @Service
 public class ProductoService implements IproductoService {
-    @Autowired
+   
 	private ProductoRepo data ;
+	
+	public ProductoService(ProductoRepo data) {
+		this.data = data;
+	}
+	
+	
 	@Override
 	public List<Producto> listar() {
 		// TODO Auto-generated method stub
