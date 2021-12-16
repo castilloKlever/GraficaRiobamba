@@ -8,6 +8,7 @@ import com.grafrio.GraficasRiobamba.entities.Producto;
 public interface IproductoService {
 	public List<Producto> listar();
 	public Optional<Producto>listarId (Long id);
+
 	public int save(Producto p);
 	public void delete(Long id);
 

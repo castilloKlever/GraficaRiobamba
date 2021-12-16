@@ -29,7 +29,10 @@ public class ProductoService implements IproductoService {
 	public Optional<Producto> listarId(Long id) {
 		// TODO Auto-generated method stub
 		return data.findById(id);
+		
 	}
+	
+	
 
 	@Override
 	public int save(Producto p) {
