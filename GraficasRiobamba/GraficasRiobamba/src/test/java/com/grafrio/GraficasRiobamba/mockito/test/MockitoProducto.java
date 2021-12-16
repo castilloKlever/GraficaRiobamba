@@ -6,6 +6,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +15,7 @@ import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +28,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.test.context.TestPropertySource;
 
+import com.grafrio.GraficasRiobamba.config.DBConnection;
 import com.grafrio.GraficasRiobamba.entities.Producto;
 import com.grafrio.GraficasRiobamba.repository.ProductoRepo;
 import com.grafrio.GraficasRiobamba.service.ProductoService;
 import com.mysql.cj.jdbc.MysqlDataSource;
 
+import java.sql.Connection;
+import java.sql.Statement;
+ 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 @TestPropertySource(
 		locations = "classpath:aplication.properties")
 
@@ -39,27 +53,22 @@ public class MockitoProducto {
 	private ProductoService productoService;
 	private ProductoRepo  productoRepo;
 	
-	@Value("${spring.datasource.url}")
-	private String datasourceUrL="jdbc:mysql://localhost:3306/portafolio?serverTimezone=UTC";
-	@Value("${spring.datasource.username}")
-	private String datasourceUsername="root";
-	@Value("${spring.datasource.password}")
-	private String datasourcePassword="";
-	@Bean
-	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer () {
-		return new PropertySourcesPlaceholderConfigurer();
-	} 
-	@Bean
-	public MysqlDataSource dataSource() {
-		MysqlDataSource mysqlDataSource = new MysqlDataSource ();
-		mysqlDataSource.setUser(datasourceUsername);
-		mysqlDataSource.setPassword(datasourcePassword);
-		mysqlDataSource.setURL(datasourceUrL);
-		
-		return mysqlDataSource  ;
-	}
 	
-    @Test
+	
+ @Test
+ public void mockitoSaveTest (){
+	 
+	 productoRepo = mock(ProductoRepo.class);
+	 productoService = new ProductoService(productoRepo);
+	 
+	 Producto producto  = new Producto(null, "Cuadernos",
+			 "Utiles Escolares","Cuadernos de papel reciclado", 12, 85, null);
+	 when(productoRepo.save(producto)).thenReturn(producto);
+	 assertEquals(1,productoService.save(producto));
+	 
+ }
+ 
+ @Test
 	public void mockitoListTest(){
 		productoRepo = mock(ProductoRepo.class);
 		productoService = new ProductoService(productoRepo);
@@ -81,21 +90,6 @@ public class MockitoProducto {
 		    assertEquals(2, expectedList.size());
 		    
 	}
-	
-	
-	
- @Test
- public void mockitoSaveTest (){
-	 
-	 productoRepo = mock(ProductoRepo.class);
-	 productoService = new ProductoService(productoRepo);
-	 
-	 Producto producto  = new Producto(null, "Cuadernos",
-			 "Utiles Escolares","Cuadernos de papel reciclado", 12, 85, null);
-	 when(productoRepo.save(producto)).thenReturn(producto);
-	 assertEquals(1,productoService.save(producto));
-	 
- }
  
  @Test
  
